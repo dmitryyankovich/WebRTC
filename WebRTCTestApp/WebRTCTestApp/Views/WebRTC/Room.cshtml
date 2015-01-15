@@ -1,9 +1,41 @@
-﻿
+﻿@model WebRTCTestApp.Models.ShowRoomModel
 @{
     ViewBag.Title = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <div id="container">
-        <video id="video" autoplay height="200" width="200"></video>
+<script type="text/javascript">
+    (function (global, undefined) {
+        global.roomId = '@Model.RoomId.ToString("N")';
+        global.userId = '@Model.UserId.ToString("N")';
+    })(this);
+</script>
+<div id="container" class="row">
+    <div class="col-xs-12 col-md-8">
+        <div class="row">
+            <div class="col-md-6">
+                Your video
+                <video autoplay class="video mine" muted="muted"></video>
+            </div>
+            <div class="col-md-6">
+                Remote video
+                <video autoplay class="video remote"></video>
+            </div>
+        </div>
     </div>
-    <script src="/Scripts/getMedia.js"></script>
+    <div class="col-xs-6 col-md-4 chat">
+        <div id="chatMessages"></div>
+        <div>
+            <input class="form-control" id="message" />
+            <button id="sendMessage" class="btn btn-default" type="button">Send</button>
+        </div>
+    </div>
+
+</div>
+<button id="startBtn" disabled="disabled" hidden="true">Start Call</button>
+@Html.ActionLink("Connect to this room", "ShowRoom", new { roomId = Model.RoomId })
+
+<script src="/Scripts/jquery-1.10.2.min.js"></script>
+<script src="/Scripts/jquery.signalR-2.1.2.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script src="/Scripts/adapter.js"></script>
+<script src="/Scripts/RTCPeerConnection.js"></script>

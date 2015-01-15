@@ -3,6 +3,20 @@
     padding-bottom: 20px;
 }
 
+video {
+    width: 320px;
+    height: 240px;
+}
+
+#message {
+    float: left;
+}
+
+#chatMessages {
+    height: 219px;
+    overflow: auto;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
