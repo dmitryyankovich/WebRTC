@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using WebRTCTestApp.Models;
 
@@ -9,6 +10,11 @@ namespace WebRTCTestApp.Hubs
     public class WebRtcHub : Hub
     {
         static Dictionary<String,Room> Rooms = new Dictionary<string, Room>();
+
+        public string ReturnUserId()
+        {
+            return Context.ConnectionId;
+        }
 
         public string AddToRoom(string userId, string name)
         {
@@ -37,9 +43,24 @@ namespace WebRTCTestApp.Hubs
             Clients.OthersInGroup(groupName).newMessage(message);
         }
 
-        public void SendMessage(string message, string groupName)
+        //Uncomment if SignalR chat
+        //public void SendMessage(string message, string groupName)
+        //{
+        //    Clients.OthersInGroup(groupName).chatMessage(message);
+        //}
+        
+        public override Task OnDisconnected(bool stopCalled)
         {
-            Clients.OthersInGroup(groupName).chatMessage(message);
+            foreach (var room in Rooms)
+            {
+                if (room.Value.Users.Contains(Context.ConnectionId))
+                {
+                    room.Value.Users.Remove(Context.ConnectionId); 
+                    Clients.OthersInGroup(room.Key).Disconnected();
+                }
+            }
+           
+            return base.OnDisconnected(stopCalled);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace WebRTCTestApp.Controllers
     {
         public ActionResult ShowRoom(Guid? roomId)
         {
-            var model = new ShowRoomModel {RoomId = roomId == null ? Guid.NewGuid() : roomId.Value, UserId = Guid.NewGuid()};
+            var model = new ShowRoomModel {RoomId = roomId == null ? Guid.NewGuid() : roomId.Value};
             return View("Room",model);
         }
     }
