@@ -72,3 +72,40 @@ D:\Temp\git\WebRTCTestApp\WebRTCTestApp\bin\Antlr3.Runtime.pdb
 D:\Temp\git\WebRTCTestApp\WebRTCTestApp\obj\Debug\WebRTCTestApp.csprojResolveAssemblyReference.cache
 D:\Temp\git\WebRTCTestApp\WebRTCTestApp\obj\Debug\WebRTCTestApp.dll
 D:\Temp\git\WebRTCTestApp\WebRTCTestApp\obj\Debug\WebRTCTestApp.pdb
+D:\Temp\New folder\WebRTCTestApp\bin\WebRTCTestApp.dll.config
+D:\Temp\New folder\WebRTCTestApp\bin\WebRTCTestApp.dll
+D:\Temp\New folder\WebRTCTestApp\bin\WebRTCTestApp.pdb
+D:\Temp\New folder\WebRTCTestApp\bin\Antlr3.Runtime.dll
+D:\Temp\New folder\WebRTCTestApp\bin\Microsoft.AspNet.SignalR.Core.dll
+D:\Temp\New folder\WebRTCTestApp\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+D:\Temp\New folder\WebRTCTestApp\bin\Microsoft.Owin.dll
+D:\Temp\New folder\WebRTCTestApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\Temp\New folder\WebRTCTestApp\bin\Microsoft.Owin.Security.dll
+D:\Temp\New folder\WebRTCTestApp\bin\Microsoft.Web.Infrastructure.dll
+D:\Temp\New folder\WebRTCTestApp\bin\Newtonsoft.Json.dll
+D:\Temp\New folder\WebRTCTestApp\bin\Owin.dll
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.Helpers.dll
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.Mvc.dll
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.Optimization.dll
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.Razor.dll
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.WebPages.Deployment.dll
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.WebPages.dll
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.WebPages.Razor.dll
+D:\Temp\New folder\WebRTCTestApp\bin\WebGrease.dll
+D:\Temp\New folder\WebRTCTestApp\bin\Microsoft.AspNet.SignalR.Core.xml
+D:\Temp\New folder\WebRTCTestApp\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+D:\Temp\New folder\WebRTCTestApp\bin\Microsoft.Owin.xml
+D:\Temp\New folder\WebRTCTestApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\Temp\New folder\WebRTCTestApp\bin\Microsoft.Owin.Security.xml
+D:\Temp\New folder\WebRTCTestApp\bin\Newtonsoft.Json.xml
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.Helpers.xml
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.Mvc.xml
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.Optimization.xml
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.Razor.xml
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.WebPages.xml
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.WebPages.Deployment.xml
+D:\Temp\New folder\WebRTCTestApp\bin\System.Web.WebPages.Razor.xml
+D:\Temp\New folder\WebRTCTestApp\bin\Antlr3.Runtime.pdb
+D:\Temp\New folder\WebRTCTestApp\obj\Debug\WebRTCTestApp.csprojResolveAssemblyReference.cache
+D:\Temp\New folder\WebRTCTestApp\obj\Debug\WebRTCTestApp.dll
+D:\Temp\New folder\WebRTCTestApp\obj\Debug\WebRTCTestApp.pdb

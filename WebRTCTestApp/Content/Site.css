@@ -43,3 +43,10 @@ select,
 textarea {
     max-width: 280px;
 }*/
+
+.cont {
+    width: 111px;
+    height: 34px;
+    margin: 0 auto;
+    margin-top: 30%; 
+}

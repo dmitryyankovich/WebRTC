@@ -9,6 +9,11 @@ namespace WebRTCTestApp.Controllers
 {
     public class WebRTCController : Controller
     {
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult ShowRoom(Guid? roomId)
         {
             var model = new ShowRoomModel {RoomId = roomId == null ? Guid.NewGuid() : roomId.Value};
