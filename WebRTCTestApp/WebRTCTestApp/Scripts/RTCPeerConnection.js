@@ -4,6 +4,7 @@
     var userId;
     var myDataChannel, remoteDataChannel;
     var myConnection, myMediaStream;
+    var missingICE;
     var hub = $.connection.webRtcHub;
     var sdpReceived = false;
     $.connection.hub.url = '/signalr/hubs';
@@ -56,10 +57,13 @@
         if (browser.indexOf("Firefox") > -1) {
             attachMediaStream(remoteVideoElement, null);
         }
+        remoteDataChannel.close();
         myConnection = null;
     };
 
     function createConnection() {
+        sdpReceived = false;
+        missingICE = [];
         console.log('creating RTCPeerConnection...');
         var config = {
             "iceServers": [
@@ -120,14 +124,14 @@
                 }
             ]
         };
-        var connection = new RTCPeerConnection(null);
+        var connection = new RTCPeerConnection(config);
 
         var dataChannel = connection.createDataChannel("myLabel", { reliable: false });
         myDataChannel = dataChannel;
+
         connection.ondatachannel = function(event) {
             gotRemoteDatachannel(event);
-        }
-
+        };
 
         connection.onicecandidate = function (event) {
             if (event.candidate) {
@@ -150,9 +154,9 @@
             console.log("Datachannel error:", error);
         };
 
-        remoteDataChannel.onmessage = function (event) {
-            console.log("Got Datachannel message:", event.data);
-            appender("Remote", event.data);
+        remoteDataChannel.onmessage = function (message) {
+            console.log("Got Datachannel message:", message.data);
+            appender("Remote", message.data);
         };
 
         remoteDataChannel.onopen = function () {
@@ -164,9 +168,10 @@
         };
 
     }
+
     hub.client.newMessage = function (data) {
         var message = JSON.parse(data),
-    connection = myConnection || createConnection();
+    connection = myConnection || createConnection(), cand;
         if (message.sdp) {
             sdpReceived = true;
             connection.setRemoteDescription(new RTCSessionDescription(message.sdp), function () {
@@ -184,11 +189,20 @@
                 } else if (connection.remoteDescription.type === 'answer') {
                     console.log('got an answer');
                 }
+                for (var i = 0,length = missingICE.length; i < length; i++) {
+                    console.log('adding missing ice candidate...');
+                    cand = new RTCIceCandidate(missingICE[i]);
+                    connection.addIceCandidate(cand);
+                }
             });
-        } else if (sdpReceived === true && message.candidate) {
-            console.log('adding ice candidate...');
-            var cand = new RTCIceCandidate(message.candidate);
-            connection.addIceCandidate(cand);
+        } else if (message.candidate) {
+            if (sdpReceived === true) {
+                console.log('adding ice candidate...');
+                cand = new RTCIceCandidate(message.candidate);
+                connection.addIceCandidate(cand);
+            } else {
+                missingICE.push(message.candidate);
+            }
         }
         myConnection = connection;
     };
@@ -207,18 +221,14 @@
         myDiv.scrollTop = myDiv.scrollHeight;
     };
 
-    //hub.client.chatMessage = function (message) {
-    //    appender('Remote', message);
-    //};
-
     var messageSender = function () {
         var message = $('#message').val();
         if (message) {
             appender('My', message);
             myDataChannel.send(message);
-            //hub.server.sendMessage(message, roomId);
             $('#message').val("");
         }
     };
+
     $('#sendMessage').on('click', messageSender);
 })(this);

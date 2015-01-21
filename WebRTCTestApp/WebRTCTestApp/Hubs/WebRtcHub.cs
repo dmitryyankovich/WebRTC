@@ -43,12 +43,6 @@ namespace WebRTCTestApp.Hubs
             Clients.OthersInGroup(groupName).newMessage(message);
         }
 
-        //Uncomment if SignalR chat
-        //public void SendMessage(string message, string groupName)
-        //{
-        //    Clients.OthersInGroup(groupName).chatMessage(message);
-        //}
-        
         public override Task OnDisconnected(bool stopCalled)
         {
             foreach (var room in Rooms)
