@@ -4,7 +4,7 @@
  * purpose of either: (i) interacting through your browser with the Microsoft
  * website or online service, subject to the applicable licensing or use
  * terms; or (ii) using the files as included with a Microsoft product subject
- * to that product's license terms. Microsoft reserves all other rights to the
+ * to that product"s license terms. Microsoft reserves all other rights to the
  * files not expressly granted by Microsoft, whether by implication, estoppel
  * or otherwise. Insofar as a script file is dual licensed under GPL,
  * Microsoft neither took the code under GPL nor distributes it thereunder but
@@ -38,7 +38,7 @@
 
     function escapeAttributeValue(value) {
         // As mentioned on http://api.jquery.com/category/selectors/
-        return value.replace(/([!"#$%&'()*+,./:;<=>?@\[\\\]^`{|}~])/g, "\\$1");
+        return value.replace(/([!"#$%&"()*+,./:;<=>?@\[\\\]^`{|}~])/g, "\\$1");
     }
 
     function getModelPrefix(fieldName) {
@@ -52,8 +52,8 @@
         return value;
     }
 
-    function onError(error, inputElement) {  // 'this' is the form element
-        var container = $(this).find("[data-valmsg-for='" + escapeAttributeValue(inputElement[0].name) + "']"),
+    function onError(error, inputElement) {  // "this" is the form element
+        var container = $(this).find("[data-valmsg-for="" + escapeAttributeValue(inputElement[0].name) + ""]"),
             replaceAttrValue = container.attr("data-valmsg-replace"),
             replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) !== false : null;
 
@@ -69,7 +69,7 @@
         }
     }
 
-    function onErrors(event, validator) {  // 'this' is the form element
+    function onErrors(event, validator) {  // "this" is the form element
         var container = $(this).find("[data-valmsg-summary=true]"),
             list = container.find("ul");
 
@@ -83,7 +83,7 @@
         }
     }
 
-    function onSuccess(error) {  // 'this' is the form element
+    function onSuccess(error) {  // "this" is the form element
         var container = error.data("unobtrusiveContainer"),
             replaceAttrValue = container.attr("data-valmsg-replace"),
             replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) : null;
@@ -98,7 +98,7 @@
         }
     }
 
-    function onReset(event) {  // 'this' is the form element
+    function onReset(event) {  // "this" is the form element
         var $form = $(this);
         $form.data("validator").resetForm();
         $form.find(".validation-summary-errors")
@@ -124,7 +124,7 @@
 
         if (!result) {
             result = {
-                options: {  // options structure passed to jQuery Validate's validate() method
+                options: {  // options structure passed to jQuery Validate"s validate() method
                     errorClass: defaultOptions.errorClass || "input-validation-error",
                     errorElement: defaultOptions.errorElement || "span",
                     errorPlacement: function () {
@@ -221,7 +221,7 @@
             /// </summary>
             /// <param name="selector" type="String">Any valid jQuery selector.</param>
 
-            // $forms includes all forms in selector's DOM hierarchy (parent, children and self) that have at least one
+            // $forms includes all forms in selector"s DOM hierarchy (parent, children and self) that have at least one
             // element with data-val=true
             var $selector = $(selector),
                 $forms = $selector.parents()
@@ -351,8 +351,8 @@
         adapters.addSingleVal("accept", "mimtype");
         adapters.addSingleVal("extension", "extension");
     } else {
-        // for backward compatibility, when the 'extension' validation method does not exist, such as with versions
-        // of JQuery Validation plugin prior to 1.10, we should use the 'accept' method for
+        // for backward compatibility, when the "extension" validation method does not exist, such as with versions
+        // of JQuery Validation plugin prior to 1.10, we should use the "accept" method for
         // validating the extension, and ignore mime-type validations as they are not supported.
         adapters.addSingleVal("extension", "extension", "accept");
     }
@@ -365,7 +365,7 @@
         var prefix = getModelPrefix(options.element.name),
             other = options.params.other,
             fullOtherName = appendModelPrefix(other, prefix),
-            element = $(options.form).find(":input").filter("[name='" + escapeAttributeValue(fullOtherName) + "']")[0];
+            element = $(options.form).find(":input").filter("[name="" + escapeAttributeValue(fullOtherName) + ""]")[0];
 
         setValidationValues(options, "equalTo", element);
     });
@@ -386,7 +386,7 @@
         $.each(splitAndTrim(options.params.additionalfields || options.element.name), function (i, fieldName) {
             var paramName = appendModelPrefix(fieldName, prefix);
             value.data[paramName] = function () {
-                return $(options.form).find(":input").filter("[name='" + escapeAttributeValue(paramName) + "']").val();
+                return $(options.form).find(":input").filter("[name="" + escapeAttributeValue(paramName) + ""]").val();
             };
         });
 

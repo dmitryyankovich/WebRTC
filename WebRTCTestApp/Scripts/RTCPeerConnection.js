@@ -1,5 +1,5 @@
 ﻿(function (global, undefined) {
-    'use strict';
+    "use strict";
     var roomId = global.roomId;
     var userId;
     var myDataChannel, remoteDataChannel;
@@ -7,9 +7,9 @@
     var missingICE;
     var hub = $.connection.webRtcHub;
     var sdpReceived = false;
-    $.connection.hub.url = '/signalr/hubs';
+    $.connection.hub.url = "/signalr/hubs";
     $.connection.hub.start(function () {
-        console.log('connected to signal server.');
+        console.log("connected to signal server.");
         hub.server.returnUserId().done(function (result) {
             userId = result;
             initialize();
@@ -27,7 +27,7 @@
                     audio: true
                 },
                 function (stream) {
-                    var videoElement = document.querySelector('.video.mine');
+                    var videoElement = document.querySelector(".video.mine");
                     myMediaStream = stream;
                     attachMediaStream(videoElement, myMediaStream);
                     if (result === "Connected") {
@@ -36,8 +36,8 @@
                         myConnection.createOffer(function (desc) {
                             myConnection.setLocalDescription(desc, function () {
                                 hub.server.send(JSON.stringify({ "sdp": desc }), roomId);
-                            });
-                        }, function (error) { console.log('Error creating session description: ' + error); });
+                            }, logErr);
+                        }, function (error) { console.log("Error creating session description: " + error); });
                     }
                 },
                 function (error) {
@@ -48,8 +48,12 @@
         });
     }
 
+    function logErr(error) {
+        console.log(error);
+    }
+
     hub.client.disconnected = function () {
-        var remoteVideoElement = document.querySelector('.video.remote');
+        var remoteVideoElement = document.querySelector(".video.remote");
         var browser = navigator.userAgent;
         if (browser.indexOf("Chrome") > -1) {
             remoteVideoElement.src = "";
@@ -57,14 +61,15 @@
         if (browser.indexOf("Firefox") > -1) {
             attachMediaStream(remoteVideoElement, null);
         }
-        remoteDataChannel.close();
+        $(".video-controls").css("visibility", "hidden");
+        console.log("Someone disconnected");
         myConnection = null;
     };
 
     function createConnection() {
         sdpReceived = false;
         missingICE = [];
-        console.log('creating RTCPeerConnection...');
+        console.log("creating RTCPeerConnection...");
         var config = {
             "iceServers": [
                 {
@@ -113,23 +118,23 @@
                     "url": "stun:stun.voxgratia.org"
                 },
                 {
-                    'url': 'turn:192.158.29.39:3478?transport=udp',
-                    'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
-                    'username': '28224511:1379330808'
+                    "url": "turn:192.158.29.39:3478?transport=udp",
+                    "credential": "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
+                    "username": "28224511:1379330808"
                 },
                 {
-                    'url': 'turn:192.158.29.39:3478?transport=tcp',
-                    'credential': 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
-                    'username': '28224511:1379330808'
+                    "url": "turn:192.158.29.39:3478?transport=tcp",
+                    "credential": "JZEOEt2V3Qb0y27GRntt2u2PAYA=",
+                    "username": "28224511:1379330808"
                 }
             ]
         };
-        var connection = new RTCPeerConnection(config);
+        var connection = new RTCPeerConnection(null);
 
         var dataChannel = connection.createDataChannel("myLabel", { reliable: false });
         myDataChannel = dataChannel;
 
-        connection.ondatachannel = function(event) {
+        connection.ondatachannel = function (event) {
             gotRemoteDatachannel(event);
         };
 
@@ -140,8 +145,9 @@
         };
 
         connection.onaddstream = function (event) {
-            var remoteVideoElement = document.querySelector('.video.remote');
+            var remoteVideoElement = document.querySelector(".video.remote");
             attachMediaStream(remoteVideoElement, event.stream);
+            $(".video-controls").css("visibility", "visible");
             console.log("Added stream");
         };
         return connection;
@@ -175,29 +181,28 @@
         if (message.sdp) {
             sdpReceived = true;
             connection.setRemoteDescription(new RTCSessionDescription(message.sdp), function () {
-                if (connection.remoteDescription.type === 'offer') {
-                    console.log('received offer, sending answer...');
+                if (connection.remoteDescription.type === "offer") {
+                    console.log("received offer, sending answer...");
 
                     connection.addStream(myMediaStream);
 
                     connection.createAnswer(function (desc) {
                         connection.setLocalDescription(desc, function () {
-
-                            hub.server.send(JSON.stringify({ 'sdp': connection.localDescription }), roomId);
-                        });
-                    }, function (error) { console.log('Error creating session description: ' + error); });
-                } else if (connection.remoteDescription.type === 'answer') {
-                    console.log('got an answer');
+                            hub.server.send(JSON.stringify({ "sdp": connection.localDescription }), roomId);
+                        }, logErr);
+                    }, function (error) { console.log("Error creating session description: " + error); });
+                } else if (connection.remoteDescription.type === "answer") {
+                    console.log("got an answer");
                 }
-                for (var i = 0,length = missingICE.length; i < length; i++) {
-                    console.log('adding missing ice candidate...');
+                for (var i = 0, length = missingICE.length; i < length; i++) {
+                    console.log("adding missing ice candidate...");
                     cand = new RTCIceCandidate(missingICE[i]);
                     connection.addIceCandidate(cand);
                 }
-            });
+            }, logErr);
         } else if (message.candidate) {
             if (sdpReceived === true) {
-                console.log('adding ice candidate...');
+                console.log("adding ice candidate...");
                 cand = new RTCIceCandidate(message.candidate);
                 connection.addIceCandidate(cand);
             } else {
@@ -207,7 +212,7 @@
         myConnection = connection;
     };
 
-    $('#message').on('keydown', function (e) {
+    $("#message").on("keydown", function (e) {
         if (e.keyCode === 13) {
             e.preventDefault();
             messageSender();
@@ -215,20 +220,21 @@
     });
 
     var appender = function (user, message) {
-        $('#chatMessages').append('<p><b>' + user
-            + '</b>: ' + message + '</p>');
-        var myDiv = $('#chatMessages')[0];
+        $("#chatMessages").append("<p><b>" + user
+            + "</b>: " + message + "</p>");
+        var myDiv = $("#chatMessages")[0];
         myDiv.scrollTop = myDiv.scrollHeight;
     };
 
     var messageSender = function () {
-        var message = $('#message').val();
+        var message = $("#message").val();
         if (message) {
-            appender('My', message);
+            appender("My", message);
             myDataChannel.send(message);
-            $('#message').val("");
+            $("#message").val("");
         }
     };
 
-    $('#sendMessage').on('click', messageSender);
+    $("#sendMessage").on("click", messageSender);
+
 })(this);

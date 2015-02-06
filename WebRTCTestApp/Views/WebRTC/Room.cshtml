@@ -5,7 +5,7 @@
 }
 <script type="text/javascript">
     (function (global, undefined) {
-        global.roomId = '@Model.RoomId.ToString("N")';
+        global.roomId = "@Model.RoomId.ToString("N")";
     })(this);
 </script>
 <div id="container" class="row">
@@ -16,6 +16,18 @@
     <div class="col-md-6">
         <p>Remote video</p>
         <video autoplay class="video remote"></video>
+        <div class="video-controls">
+            <button type="button" id="play-pause" class="btn btn-default">
+                <span class="glyphicon glyphicon-pause"></span>
+            </button>
+            <button type="button" id="mute" class="btn btn-default">
+                <span class="glyphicon glyphicon-volume-off"></span>
+            </button>
+            <input type="range" id="volumebar">
+            <button type="button" id="fullscreen" class="btn btn-default">
+                <span class="glyphicon glyphicon-fullscreen"></span>
+            </button>
+        </div>
     </div>
 </div>
 <div class="container chat">
@@ -32,3 +44,4 @@
 <script src="~/signalr/hubs"></script>
 <script src="/Scripts/adapter.js"></script>
 <script src="/Scripts/RTCPeerConnection.js"></script>
+<script src="/Scripts/videoControls.js"></script>

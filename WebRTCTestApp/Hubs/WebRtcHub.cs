@@ -49,6 +49,7 @@ namespace WebRTCTestApp.Hubs
             {
                 if (room.Value.Users.Contains(Context.ConnectionId))
                 {
+                    Groups.Remove(Context.ConnectionId, room.Key);
                     room.Value.Users.Remove(Context.ConnectionId); 
                     Clients.OthersInGroup(room.Key).Disconnected();
                 }

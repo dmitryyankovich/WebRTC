@@ -4,7 +4,7 @@
  * purpose of either: (i) interacting through your browser with the Microsoft
  * website or online service, subject to the applicable licensing or use
  * terms; or (ii) using the files as included with a Microsoft product subject
- * to that product's license terms. Microsoft reserves all other rights to the
+ * to that product"s license terms. Microsoft reserves all other rights to the
  * files not expressly granted by Microsoft, whether by implication, estoppel
  * or otherwise. Insofar as a script file is dual licensed under GPL,
  * Microsoft neither took the code under GPL nor distributes it thereunder but
@@ -13,24 +13,24 @@
  *
  * NUGET: END LICENSE TEXT */
 /*! matchMedia() polyfill - Test a CSS media type/query in JS. Authors & copyright (c) 2012: Scott Jehl, Paul Irish, Nicholas Zakas. Dual MIT/BSD license */
-/*! NOTE: If you're already including a window.matchMedia polyfill via Modernizr or otherwise, you don't need this part */
+/*! NOTE: If you"re already including a window.matchMedia polyfill via Modernizr or otherwise, you don"t need this part */
 window.matchMedia = window.matchMedia || (function(doc, undefined){
   
   var bool,
       docElem  = doc.documentElement,
       refNode  = docElem.firstElementChild || docElem.firstChild,
       // fakeBody required for <FF4 when executed in <head>
-      fakeBody = doc.createElement('body'),
-      div      = doc.createElement('div');
+      fakeBody = doc.createElement("body"),
+      div      = doc.createElement("div");
   
-  div.id = 'mq-test-1';
+  div.id = "mq-test-1";
   div.style.cssText = "position:absolute;top:-100em";
   fakeBody.style.background = "none";
   fakeBody.appendChild(div);
   
   return function(q){
     
-    div.innerHTML = '&shy;<style media="'+q+'"> #mq-test-1 { width: 42px; }</style>';
+    div.innerHTML = "&shy;<style media=""+q+""> #mq-test-1 { width: 42px; }</style>";
     
     docElem.insertBefore(fakeBody, refNode);
     bool = div.offsetWidth == 42;  
@@ -125,7 +125,7 @@ window.matchMedia = window.matchMedia || (function(doc, undefined){
 				//try to get CSS path
 				href		= href.substring( 0, href.lastIndexOf( "/" )),
 				repUrls		= function( css ){
-					return css.replace( /(url\()['"]?([^\/\)'"][^:\)'"]+)['"]?(\))/g, "$1" + href + "$2$3" );
+					return css.replace( /(url\()[""]?([^\/\)""][^:\)""]+)[""]?(\))/g, "$1" + href + "$2$3" );
 				},
 				useMedia	= !ql && media,
 				//vars used in loop
@@ -183,7 +183,7 @@ window.matchMedia = window.matchMedia || (function(doc, undefined){
 		// returns the value of 1em in pixels
 		getEmValue		= function() {
 			var ret,
-				div = doc.createElement('div'),
+				div = doc.createElement("div"),
 				body = doc.body,
 				fakeUsed = false;
 									
@@ -213,7 +213,7 @@ window.matchMedia = window.matchMedia || (function(doc, undefined){
 			return ret;
 		},
 		
-		//cached container for 1em value, populated the first time it's needed 
+		//cached container for 1em value, populated the first time it"s needed 
 		eminpx,
 		
 		//enable/disable styles
@@ -250,7 +250,7 @@ window.matchMedia = window.matchMedia || (function(doc, undefined){
 					max = parseFloat( max ) * ( max.indexOf( em ) > -1 ? ( eminpx || getEmValue() ) : 1 );
 				}
 				
-				// if there's no media query at all (the () part), or min or max is not null, and if either is present, they're true
+				// if there"s no media query at all (the () part), or min or max is not null, and if either is present, they"re true
 				if( !thisstyle.hasquery || ( !minnull || !maxnull ) && ( minnull || currWidth >= min ) && ( maxnull || currWidth <= max ) ){
 						if( !styleBlocks[ thisstyle.media ] ){
 							styleBlocks[ thisstyle.media ] = [];

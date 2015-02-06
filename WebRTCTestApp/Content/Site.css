@@ -14,9 +14,20 @@ video {
     height: 45px;
 
 }
+
 .chat {
     padding: 0;
 }
+
+.video-controls {
+    visibility: hidden;
+}
+
+video::-webkit-media-controls {
+  display:none !important;
+}
+
+.mejs-controls {display: none !important;}
 #chatMessages {
     height: 219px;
     overflow-y: auto;
@@ -37,7 +48,7 @@ textarea {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
+/* Set width on the form input elements since they"re 100% wide by default */
 /*input,
 select,
 textarea {
