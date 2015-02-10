@@ -10,23 +10,33 @@
 </script>
 <div id="container" class="row">
     <div class="col-md-6">
-        <p>Your video</p>
-        <video autoplay class="video mine" muted="muted"></video>
+        <div class="noVideoDiv">
+            Video not available
+        </div>
+        <div class="videoDiv">
+            <p>Your video</p>
+            <video autoplay class="video mine" muted="muted"></video>
+        </div>
     </div>
     <div class="col-md-6">
-        <p>Remote video</p>
-        <video autoplay class="video remote"></video>
-        <div class="video-controls">
-            <button type="button" id="play-pause" class="btn btn-default">
-                <span class="glyphicon glyphicon-pause"></span>
-            </button>
-            <button type="button" id="mute" class="btn btn-default">
-                <span class="glyphicon glyphicon-volume-off"></span>
-            </button>
-            <input type="range" id="volumebar">
-            <button type="button" id="fullscreen" class="btn btn-default">
-                <span class="glyphicon glyphicon-fullscreen"></span>
-            </button>
+        <div class="noVideoDiv">
+            Video not available
+        </div>
+        <div class="videoDiv">
+            <p>Remote video</p>
+            <video autoplay class="video remote"></video>
+            <div class="video-controls">
+                <button type="button" id="play-pause" class="btn btn-default">
+                    <span class="glyphicon glyphicon-pause"></span>
+                </button>
+                <button type="button" id="mute" class="btn btn-default">
+                    <span class="glyphicon glyphicon-volume-off"></span>
+                </button>
+                <input type="range" id="volumebar">
+                <button type="button" id="fullscreen" class="btn btn-default">
+                    <span class="glyphicon glyphicon-fullscreen"></span>
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -34,6 +44,9 @@
     <div id="chatMessages"></div>
     <div id="formControls">
         <textarea class="form-control input-lg" id="message"></textarea>
+        <span class="btn btn-default btn-file btn-lg" id="fileInput">
+            Browse <input type="file" id="input">
+        </span>
         <button id="sendMessage" class="btn btn-default btn-lg" type="button">Send</button>
     </div>
 </div>

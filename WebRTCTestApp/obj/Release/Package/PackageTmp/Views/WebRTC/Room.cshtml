@@ -1,0 +1,50 @@
+﻿@model WebRTCTestApp.Models.ShowRoomModel
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    (function (global, undefined) {
+        global.roomId = "@Model.RoomId.ToString("N")";
+    })(this);
+</script>
+<div id="container" class="row">
+    <div class="col-md-6">
+        <p>Your video</p>
+        <video autoplay class="video mine" muted="muted"></video>
+    </div>
+    <div class="col-md-6">
+        <p>Remote video</p>
+        <video autoplay class="video remote"></video>
+        <div class="video-controls">
+            <button type="button" id="play-pause" class="btn btn-default">
+                <span class="glyphicon glyphicon-pause"></span>
+            </button>
+            <button type="button" id="mute" class="btn btn-default">
+                <span class="glyphicon glyphicon-volume-off"></span>
+            </button>
+            <input type="range" id="volumebar">
+            <button type="button" id="fullscreen" class="btn btn-default">
+                <span class="glyphicon glyphicon-fullscreen"></span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container chat">
+    <div id="chatMessages"></div>
+    <div id="formControls">
+        <textarea class="form-control input-lg" id="message"></textarea>
+        <span class="btn btn-default btn-file btn-lg" id="fileInput">
+            Browse <input type="file" id="input">
+        </span>
+        <button id="sendMessage" class="btn btn-default btn-lg" type="button">Send</button>
+    </div>
+</div>
+@Html.ActionLink("Connect to this room", "ShowRoom", new { roomId = Model.RoomId })
+
+<script src="/Scripts/jquery-1.10.2.min.js"></script>
+<script src="/Scripts/jquery.signalR-2.1.2.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script src="/Scripts/adapter.js"></script>
+<script src="/Scripts/RTCPeerConnection.js"></script>
+<script src="/Scripts/videoControls.js"></script>

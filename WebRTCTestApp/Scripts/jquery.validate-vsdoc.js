@@ -4,7 +4,7 @@
  * purpose of either: (i) interacting through your browser with the Microsoft
  * website or online service, subject to the applicable licensing or use
  * terms; or (ii) using the files as included with a Microsoft product subject
- * to that product"s license terms. Microsoft reserves all other rights to the
+ * to that product's license terms. Microsoft reserves all other rights to the
  * files not expressly granted by Microsoft, whether by implication, estoppel
  * or otherwise. Insofar as a script file is dual licensed under GPL,
  * Microsoft neither took the code under GPL nor distributes it thereunder but
@@ -50,20 +50,20 @@ $.extend($.fn, {
 		/// A set of key/value pairs that configure the validate. All options are optional.
 		/// </param>
 
-		// if nothing is selected, return nothing; can"t chain anyway
+		// if nothing is selected, return nothing; can't chain anyway
 		if (!this.length) {
-			options && options.debug && window.console && console.warn( "nothing selected, can"t validate, returning nothing" );
+			options && options.debug && window.console && console.warn( "nothing selected, can't validate, returning nothing" );
 			return;
 		}
 
 		// check if a validator for this form was already created
-		var validator = $.data(this[0], "validator");
+		var validator = $.data(this[0], 'validator');
 		if ( validator ) {
 			return validator;
 		}
 		
 		validator = new $.validator( options, this[0] );
-		$.data(this[0], "validator", validator); 
+		$.data(this[0], 'validator', validator); 
 		
 		if ( validator.settings.onsubmit ) {
 		
@@ -89,7 +89,7 @@ $.extend($.fn, {
 					if ( validator.settings.submitHandler ) {
 						if (validator.submitButton) {
 							// insert a hidden input as a replacement for the missing submit button
-							var hidden = $("<input type="hidden"/>").attr("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
+							var hidden = $("<input type='hidden'/>").attr("name", validator.submitButton.name).val(validator.submitButton.value).appendTo(validator.currentForm);
 						}
 						validator.settings.submitHandler.call( validator, validator.currentForm );
 						if (validator.submitButton) {
@@ -129,7 +129,7 @@ $.extend($.fn, {
 		/// </summary>
 		/// <returns type="Boolean" />
 
-        if ( $(this[0]).is("form")) {
+        if ( $(this[0]).is('form')) {
             return this.validate().form();
         } else {
             var valid = true;
@@ -172,7 +172,7 @@ $.extend($.fn, {
 		var element = this[0];
 		
 		if (command) {
-			var settings = $.data(element.form, "validator").settings;
+			var settings = $.data(element.form, 'validator').settings;
 			var staticRules = settings.rules;
 			var existingRules = $.validator.staticRules(element);
 			switch(command) {
@@ -525,7 +525,7 @@ $.extend($.validator, {
 					$(this.findLastActive() || this.errorList.length && this.errorList[0].element || [])
 					.filter(":visible")
 					.focus()
-					// manually trigger focusin event; without it, focusin handler isn"t called, findLastActive won"t have anything to find
+					// manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
 					.trigger("focusin");
 				} catch(e) {
 					// ignore IE throwing errors when focusing hidden elements
@@ -605,7 +605,7 @@ $.extend($.validator, {
 					var result = $.validator.methods[method].call( this, element.value.replace(/\r/g, ""), element, rule.parameters );
 					
 					// if a method indicates that the field is optional and therefore valid,
-					// don"t mark it as valid when there are no other rules
+					// don't mark it as valid when there are no other rules
 					if ( result == "dependency-mismatch" ) {
 						dependencyMismatch = true;
 						continue;
@@ -623,7 +623,7 @@ $.extend($.validator, {
 					}
 				} catch(e) {
 					this.settings.debug && window.console && console.log("exception occured when checking element " + element.id
-						 + ", check the "" + rule.method + "" method", e);
+						 + ", check the '" + rule.method + "' method", e);
 					throw e;
 				}
 			}
@@ -635,7 +635,7 @@ $.extend($.validator, {
 		},
 		
 		// return the custom message for the given element and validation method
-		// specified in the element"s "messages" metadata
+		// specified in the element's "messages" metadata
 		customMetaMessage: function(element, method) {
 			if (!$.metadata)
 				return;
@@ -681,7 +681,7 @@ $.extend($.validator, {
 			if ( typeof message == "function" ) {
 				message = message.call(this, rule.parameters, element);
 			} else if (theregex.test(message)) {
-				message = jQuery.format(message.replace(theregex, "{$1}"), rule.parameters);
+				message = jQuery.format(message.replace(theregex, '{$1}'), rule.parameters);
 			}			
 			this.errorList.push({
 				message: message,
@@ -768,7 +768,7 @@ $.extend($.validator, {
 		errorsFor: function(element) {
 			var name = this.idOrName(element);
     		return this.errors().filter(function() {
-				return $(this).attr("for") == name;
+				return $(this).attr('for') == name;
 			});
 		},
 		
@@ -790,11 +790,11 @@ $.extend($.validator, {
 		
 		getLength: function(value, element) {
 			switch( element.nodeName.toLowerCase() ) {
-			case "select":
+			case 'select':
 				return $("option:selected", element).length;
-			case "input":
+			case 'input':
 				if( this.checkable( element) )
-					return this.findByName(element.name).filter(":checked").length;
+					return this.findByName(element.name).filter(':checked').length;
 			}
 			return value.length;
 		},
@@ -885,8 +885,8 @@ $.extend($.validator, {
 	
 	classRules: function(element) {
 		var rules = {};
-		var classes = $(element).attr("class");
-		classes && $.each(classes.split(" "), function() {
+		var classes = $(element).attr('class');
+		classes && $.each(classes.split(' '), function() {
 			if (this in $.validator.classRuleSettings) {
 				$.extend(rules, $.validator.classRuleSettings[this]);
 			}
@@ -916,7 +916,7 @@ $.extend($.validator, {
 	metadataRules: function(element) {
 		if (!$.metadata) return {};
 		
-		var meta = $.data(element.form, "validator").settings.meta;
+		var meta = $.data(element.form, 'validator').settings.meta;
 		return meta ?
 			$(element).metadata()[meta] :
 			$(element).metadata();
@@ -924,7 +924,7 @@ $.extend($.validator, {
 	
 	staticRules: function(element) {
 		var rules = {};
-		var validator = $.data(element.form, "validator");
+		var validator = $.data(element.form, 'validator');
 		if (validator.settings.rules) {
 			rules = $.validator.normalizeRule(validator.settings.rules[element.name]) || {};
 		}
@@ -963,12 +963,12 @@ $.extend($.validator, {
 		});
 		
 		// clean number parameters
-		$.each(["minlength", "maxlength", "min", "max"], function() {
+		$.each(['minlength', 'maxlength', 'min', 'max'], function() {
 			if (rules[this]) {
 				rules[this] = Number(rules[this]);
 			}
 		});
-		$.each(["rangelength", "range"], function() {
+		$.each(['rangelength', 'range'], function() {
 			if (rules[this]) {
 				rules[this] = [Number(rules[this][0]), Number(rules[this][1])];
 			}
@@ -1042,11 +1042,11 @@ $.extend($.validator, {
 			if ( !this.depend(param, element) )
 				return "dependency-mismatch";
 			switch( element.nodeName.toLowerCase() ) {
-			case "select":
+			case 'select':
 				// could be an array for select-multiple or a string, both are fine this way
 				var val = $(element).val();
 				return val && val.length > 0;
-			case "input":
+			case 'input':
 				if ( this.checkable(element) )
 					return this.getLength(value, element) > 0;
 			default:
@@ -1141,13 +1141,13 @@ $.extend($.validator, {
 		// http://docs.jquery.com/Plugins/Validation/Methods/email
 		email: function(value, element) {
 			// contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-			return this.optional(element) || /^((([a-z]|\d|[!#\$%&"\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&"\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i.test(value);
+			return this.optional(element) || /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i.test(value);
 		},
 	
 		// http://docs.jquery.com/Plugins/Validation/Methods/url
 		url: function(value, element) {
 			// contributed by Scott Gonzalez: http://projects.scottsplayground.com/iri/
-			return this.optional(element) || /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&"\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&"\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&"\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&"\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&"\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
+			return this.optional(element) || /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
 		},
         
 		// http://docs.jquery.com/Plugins/Validation/Methods/date
@@ -1200,7 +1200,7 @@ $.extend($.validator, {
 		
 		// http://docs.jquery.com/Plugins/Validation/Methods/accept
 		accept: function(value, element, param) {
-			param = typeof param == "string" ? param.replace(/,/g, "|") : "png|jpe?g|gif";
+			param = typeof param == "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
 			return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i")); 
 		},
 		
@@ -1263,11 +1263,11 @@ $.format = $.validator.format;
 // handler is only called when $(event.target).is(delegate), in the scope of the jquery-object for event.target 
 ;(function($) {
 	// only implement if not provided by jQuery core (since 1.4)
-	// TODO verify if jQuery 1.4"s implementation is compatible with older jQuery special-event APIs
+	// TODO verify if jQuery 1.4's implementation is compatible with older jQuery special-event APIs
 	if (!jQuery.event.special.focusin && !jQuery.event.special.focusout && document.addEventListener) {
 		$.each({
-			focus: "focusin",
-			blur: "focusout"	
+			focus: 'focusin',
+			blur: 'focusout'	
 		}, function( original, fix ){
 			$.event.special[fix] = {
 				setup:function() {
