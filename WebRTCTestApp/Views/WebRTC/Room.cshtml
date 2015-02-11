@@ -10,20 +10,20 @@
 </script>
 <div id="container" class="row">
     <div class="col-md-6">
-        <div class="noVideoDiv">
-            Video not available
-        </div>
-        <div class="videoDiv">
+        <div class="videoDiv my">
             <p>Your video</p>
+            <div class="noVideoDiv my">
+                Video not available
+            </div>
             <video autoplay class="video mine" muted="muted"></video>
         </div>
     </div>
     <div class="col-md-6">
-        <div class="noVideoDiv">
-            Video not available
-        </div>
-        <div class="videoDiv">
+        <div class="videoDiv remote">
             <p>Remote video</p>
+            <div class="noVideoDiv remote">
+                Video not available
+            </div>
             <video autoplay class="video remote"></video>
             <div class="video-controls">
                 <button type="button" id="play-pause" class="btn btn-default">

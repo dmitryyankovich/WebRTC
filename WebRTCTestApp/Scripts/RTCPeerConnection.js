@@ -55,6 +55,8 @@
                     createConn(stream, result);
                 },
                 function (error) {
+                    $('.noVideoDiv.my').toggle();
+                    $('.video.mine').toggle();
                     setTimeout(createConn, 5, null, result);
                     alert(JSON.stringify(error));
                 }
@@ -93,6 +95,7 @@
         } else {
             attachMediaStream(remoteVideoElement, null);
         }
+        $('.noVideoDiv.remote').hide();
         $('.video-controls').css('visibility', 'hidden');
         console.log('Someone disconnected');
         myConnection = null;
@@ -216,11 +219,15 @@
                     console.log('mess');
                     appender('Remote', mess.text);
                     break;
+                case 'noVideo':
+                    $('.noVideoDiv.remote').toggle();
+                    $('.video.remote').toggle();
+                    break;
                 case 'accept':
                     //$('.waiting').remove();
                     appender('Downloading', null);
                     var reader1 = new FileReader();
-                    reader1.readAsBinaryString(file);
+                    reader1.readAsArrayBuffer(file);
                     reader1.onload = azaz;
                     reader.readAsDataURL(file);
                     reader.onload = onReadAsDataUrl;
@@ -254,6 +261,9 @@
         };
 
         remoteDataChannel.onopen = function () {
+            if (!myMediaStream) {
+                myDataChannel.send(JSON.stringify({type: 'noVideo'}));
+            }
             console.log('Datachannel opened');
         };
 
@@ -489,6 +499,14 @@
 
     function azaz(event) {
         var s = event.target.result;
+        var k = new Uint8Array(s);
+        fileName = file.name;
+        var bl = new Blob([k], { type: 'application/octet-binary' });
+        //myDataChannel.send(s);
+        var url = URL.createObjectURL(bl);
+        appender('Complete', url);
+        var z = JSON.stringify(s);
+        alert(z.length);
         console.log(s.length);
     }
 
